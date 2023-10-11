@@ -588,62 +588,62 @@ def ChildsPoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
 		roi (dict)
 		tips (str)
     """
-    
+    side = ""
     for key, _ in roi.items():
         tip_flag = False
         if tips == "":
             tip_flag = True
-        if key == 'LEFT_ELBOW':
-            if angle_dict[key]>=150:
+        #detect the side for the pose
+        if key == 'NOSE':
+            node_x,_,_ = getLandmarks(point3d[AngleNodeDef.NOSE])
+            left_hip_x,_,_ = getLandmarks(point3d[AngleNodeDef.LEFT_HIP])
+            right_hip_x,_,_ = getLandmarks(point3d[AngleNodeDef.RIGHT_HIP])
+            if node_x>left_hip_x and node_x>right_hip_x:
                 roi[key] = True
+                side = "LEFT"
+            elif node_x<left_hip_x and node_x<right_hip_x:
+                roi[key] = True
+                side = "RIGHT"
             else:
                 roi[key] = False
-                tips = "請確認左手臂是否已經伸直"   if tip_flag else tips
-        elif key == 'RIGHT_ELBOW':
+                tips = "請將身體面向右方或左方趴下，並用雙手將臀部向前伸直" if tip_flag else tips
+                break
+        if key == f'{side}_ELBOW':
             if angle_dict[key]>=150:
-                roi[key] = True
+                roi["LEFT_ELBOW"] = True
+                roi["RIGHT_ELBOW"] = True
             else:
-                roi[key] = False
-                tips = "請確認右手臂是否已經伸直" if tip_flag else tips
-        elif key == 'LEFT_SHOULDER':
+                roi["LEFT_ELBOW"] = False
+                roi["RIGHT_ELBOW"] = False
+                tips = "請確認手掌是否已經貼至地面"   if tip_flag else tips
+        elif key == f'{side}_SHOULDER':
             if angle_dict[key]>=150:
-                roi[key] = True
+                roi["LEFT_SHOULDER"] = True
+                roi["RIGHT_SHOULDER"] = True
             else:
-                roi[key] = False
-                tips = "請確認是否已經將左手臂向前伸直" if tip_flag else tips
-        elif key == 'RIGHT_SHOULDER':
-            if angle_dict[key]>=150:
-                roi[key] = True
-            else:
-                roi[key] = False
-                tips = "請確認是否已經將右手臂向前伸直" if tip_flag else tips	
-        elif key == 'LEFT_HIP':
+                roi["LEFT_SHOULDER"] = False
+                roi["RIGHT_SHOULDER"] = False
+                tips = "請確認是否已經將手臂向前伸直" if tip_flag else tips
+        elif key == f'{side}_HIP':
             if angle_dict[key]<=45:
-                roi[key] = True
+                roi["LEFT_HIP"] = True
+                roi["RIGHT_HIP"] = True
             else:
-                roi[key] = False
+                roi["LEFT_HIP"] = False
+                roi["RIGHT_HIP"] = False
                 tips = "請確認是否已經將身體向前趴下" if tip_flag else tips	
-        elif key == 'RIGHT_HIP':
+        elif key == f'{side}_KNEE':
             if angle_dict[key]<=45:
-                roi[key] = True
+                roi["LEFT_KNEE"] = True
+                roi["RIGHT_KNEE"] = True
             else:
-                roi[key] = False
-                tips = "請確認是否已經將身體向前趴下" if tip_flag else tips
-        elif key == 'LEFT_KNEE':
-            if angle_dict[key]<=45:
-                roi[key] = True
-            else:
-                roi[key] = False
-                tips = "請確認左腿是否已經屈膝向前" if tip_flag else tips	
-        elif key == 'RIGHT_KNEE':
-            if angle_dict[key]<=45:
-                roi[key] = True
-            else:
-                roi[key] = False
-                tips = "請確認右腿是否已經屈膝向前" if tip_flag else tips	
+                roi["LEFT_KNEE"] = False
+                roi["RIGHT_KNEE"] = False
+                tips = "請確認雙腿是否已經屈膝向前" if tip_flag else tips		
     if tips == "":
         tips = "動作正確 ! "
     return roi, tips
+
 def DownwardDogRule(roi, tips, sample_angle_dict, angle_dict, point3d):
     """child's pose rule 
     Args:
@@ -656,71 +656,66 @@ def DownwardDogRule(roi, tips, sample_angle_dict, angle_dict, point3d):
 		roi (dict)
 		tips (str)
     """
-    
+    side = ""
     for key, _ in roi.items():
         tip_flag = False
         if tips == "":
             tip_flag = True
-        if key == 'LEFT_ELBOW':
-            if angle_dict[key]>=150:
+        #detect the side for the pose
+        if key == 'NOSE':
+            node_x,_,_ = getLandmarks(point3d[AngleNodeDef.NOSE])
+            left_hip_x,_,_ = getLandmarks(point3d[AngleNodeDef.LEFT_HIP])
+            right_hip_x,_,_ = getLandmarks(point3d[AngleNodeDef.RIGHT_HIP])
+            if node_x>left_hip_x and node_x>right_hip_x:
                 roi[key] = True
+                side = "LEFT"
+            elif node_x<left_hip_x and node_x<right_hip_x:
+                roi[key] = True
+                side = "RIGHT"
             else:
                 roi[key] = False
-                tips = "請確認左手臂是否已經伸直"   if tip_flag else tips
-        elif key == 'RIGHT_ELBOW':
+                tips = "請將身體面向右方或左方，並用雙手將臀部向上撐起成倒V字型" if tip_flag else tips
+                break
+        if key == f'{side}_ELBOW':
             if angle_dict[key]>=150:
-                roi[key] = True
+                roi["LEFT_ELBOW"] = True
+                roi["RIGHT_ELBOW"] = True
             else:
-                roi[key] = False
-                tips = "請確認右手臂是否已經伸直" if tip_flag else tips
-        elif key == 'LEFT_SHOULDER':
+                roi["LEFT_ELBOW"] = False
+                roi["RIGHT_ELBOW"] = False
+                tips = "請確認手掌是否已經貼至地面"   if tip_flag else tips
+        elif key == f'{side}_SHOULDER':
             if angle_dict[key]>=150:
-                roi[key] = True
+                roi["LEFT_SHOULDER"] = True
+                roi["RIGHT_SHOULDER"] = True
             else:
-                roi[key] = False
-                tips = "請確認是否已經將左手臂向前伸直" if tip_flag else tips
-        elif key == 'RIGHT_SHOULDER':
-            if angle_dict[key]>=150:
-                roi[key] = True
-            else:
-                roi[key] = False
-                tips = "請確認是否已經將右手臂向前伸直" if tip_flag else tips	
-        elif key == 'LEFT_HIP':
+                roi["LEFT_SHOULDER"] = False
+                roi["RIGHT_SHOULDER"] = False
+                tips = "請確認是否已經將手臂打直" if tip_flag else tips	
+        elif key == f'{side}_HIP':
             if angle_dict[key]>=75 and angle_dict[key]<=105:
-                roi[key] = True
+                roi["LEFT_HIP"] = True
+                roi["RIGHT_HIP"] = True
             else:
-                roi[key] = False
-                tips = "請確認是否已經將身體向下伸展且把背打直" if tip_flag else tips	
-        elif key == 'RIGHT_HIP':
-            if angle_dict[key]>=75 and angle_dict[key]<=105:
-                roi[key] = True
-            else:
-                roi[key] = False
-                tips = "請確認是否已經將身體向下伸展且把背打直" if tip_flag else tips
-        elif key == 'LEFT_KNEE':
+                roi["LEFT_HIP"] = False
+                roi["RIGHT_HIP"] = False
+                tips = "請確認是否已經將身體向下伸展且把背打直, 呈現倒v字型" if tip_flag else tips	
+        elif key == f'{side}_KNEE':
             if angle_dict[key]>=150:
-                roi[key] = True
+                roi["LEFT_KNEE"] = True
+                roi["RIGHT_KNEE"] = True
             else:
-                roi[key] = False
-                tips = "請確認左腿是否已經打直" if tip_flag else tips	
-        elif key == 'RIGHT_KNEE':
-            if angle_dict[key]>=150:
-                roi[key] = True
-            else:
-                roi[key] = False
-                tips = "請確認右腿是否已經打直" if tip_flag else tips
-        elif key == 'LEFT_ANKLE':
+                roi["LEFT_KNEE"] = False
+                roi["RIGHT_KNEE"] = False
+                tips = "請確認雙腿是否已經打直" if tip_flag else tips	
+        elif key == f'{side}_ANKLE':
             if angle_dict[key]<=180:
-                roi[key] = True
+                roi["LEFT_ANKLE"] = True
+                roi["RIGHT_ANKLE"] = True
             else:
-                roi[key] = False
-                tips = "請確認左腳跟是否已經貼地" if tip_flag else tips	
-        elif key == 'RIGHT_ANKLE':
-            if angle_dict[key]<=180:
-                roi[key] = True
-            else:
-                roi[key] = False
-                tips = "請確認右腳跟是否已經貼地" if tip_flag else tips	
+                roi["LEFT_ANKLE"] = False
+                roi["RIGHT_ANKLE"] = False
+                tips = "請確認腳跟是否已經貼地" if tip_flag else tips	
     if tips == "":
         tips = "動作正確 ! "
     return roi, tips

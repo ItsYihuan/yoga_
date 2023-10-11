@@ -91,18 +91,19 @@ class YogaPose():
             samplefile_path = f"yoga_toolkit/SampleVideo/PlankPose/sample_v1.mp4"
         elif type == 'Childs':
             roi = {
-                'RIGHT_ANKLE': False,
-                'RIGHT_KNEE': False,
-                'LEFT_KNEE': False,
-                'LEFT_WRIST': False,
-                'RIGHT_WRIST': False,
-                'LEFT_HIP': False,
-                'RIGHT_HIP': False,
                 'NOSE': False,
                 'LEFT_SHOULDER': False,
                 'RIGHT_SHOULDER': False,
                 'LEFT_ELBOW': False,
-                'RIGHT_ELBOW': False
+                'RIGHT_ELBOW': False,
+                'LEFT_WRIST': False,
+                'RIGHT_WRIST': False,
+                'LEFT_HIP': False,
+                'RIGHT_HIP': False,
+                'RIGHT_KNEE': False,
+                'LEFT_KNEE': False,
+                'LEFT_ANKLE': False,
+                'RIGHT_ANKLE': False,
             }
             angle_def = AngleNodeDef.CHILDS_ANGLE
             jsonfile_path = f"yoga_toolkit/JsonFile/ChildsPose/sample.json"
@@ -110,18 +111,20 @@ class YogaPose():
         elif type == "DownwardDog":
             roi = {
                 'NOSE': False,
-                'LEFT_ELBOW': False,
-                'RIGHT_ELBOW': False,
-	            'LEFT_HEEL': False,
-                'RIGHT_HEEL': False,
                 'LEFT_SHOULDER': False,
                 'RIGHT_SHOULDER': False,
-                'LEFT_HIP': False,
-                'RIGHT_HIP': False,
+                'LEFT_ELBOW': False,
+                'RIGHT_ELBOW': False,
                 'LEFT_WRIST': False,
                 'RIGHT_WRIST': False,
+                'LEFT_HIP': False,
+                'RIGHT_HIP': False,
                 'RIGHT_KNEE': False,
                 'LEFT_KNEE': False,
+                'RIGHT_ANKLE':False,
+                'LEFT_ANKLE':False,
+                'LEFT_HEEL': False,
+                'RIGHT_HEEL': False,
             }
             angle_def = AngleNodeDef.DOWNWARDDOG_ANGLE 
             jsonfile_path = f"yoga_toolkit/JsonFile/DownwardDogPose/sample.json"
