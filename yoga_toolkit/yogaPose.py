@@ -148,7 +148,28 @@ class YogaPose():
             angle_def = AngleNodeDef.LOWLUNGE_ANGLE 
             jsonfile_path = f"yoga_toolkit/JsonFile/LowLungePose/sample.json"
             samplefile_path = f"yoga_toolkit/SampleVideo/LowLungePose/sample.mp4"
-
+        elif type == "SeatedForwardBend":
+            roi = {
+                'NOSE': False,
+                'LEFT_SHOULDER': False,
+                'RIGHT_SHOULDER': False,
+                'LEFT_ELBOW': False,
+                'RIGHT_ELBOW': False,
+                'LEFT_WRIST': False,
+                'RIGHT_WRIST': False,
+                'LEFT_HIP': False,
+                'RIGHT_HIP': False,
+                'RIGHT_KNEE': False,
+                'LEFT_KNEE': False,
+                'RIGHT_ANKLE':False,
+                'LEFT_ANKLE':False,
+                'RIGHT_FOOT_INDEX':False,
+                'LEFT_FOOT_INDEX':False,
+            }
+            angle_def = AngleNodeDef.SEATEDFORWARDBEND_ANGLE 
+            jsonfile_path = f"yoga_toolkit/JsonFile/SeatedForwardBendPose/sample.json"
+            samplefile_path = f"yoga_toolkit/SampleVideo/SeatedForwardBendPose/sample.mp4"
+ 
         return roi, angle_def, jsonfile_path, samplefile_path
     
     def initialAngleDict(self, dict={}):
@@ -282,7 +303,14 @@ class YogaPose():
                                         list(toolkit.getLandmarks(point3d[value[2]])))
                 self.angle_dict[key] = angle
             self.roi, self.tips = toolkit.LowLungeRule(self.roi, self.tips, self.sample_angle_dict, self.angle_dict, point3d)
-        
+        elif(self.type == 'SeatedForwardBend'):
+            for key,value in self.angle_def.items():
+                angle = toolkit.computeAngle(list(toolkit.getLandmarks(point3d[value[0]])), 
+                                        list(toolkit.getLandmarks(point3d[value[1]])), 
+                                        list(toolkit.getLandmarks(point3d[value[2]])))
+                self.angle_dict[key] = angle
+            self.roi, self.tips = toolkit.SeatedForwardBendRule(self.roi, self.tips, self.sample_angle_dict, self.angle_dict, point3d)
+
         frame = self.draw(w, h, frame, point2d)
         return frame
     
