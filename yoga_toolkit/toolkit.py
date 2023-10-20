@@ -780,9 +780,10 @@ def LowLungeRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 roi[f"{side}_HIP"] = False
                 tips = "請確認是否已經將重心壓低" if tip_flag else tips
         elif key == f'{side}_KNEE':
-            if angle_dict[key]<=120:
+            if angle_dict[key]<=115:
                 roi[f"{side}_KNEE"] = True
             else:
+                #print(f"{side}_KNEE: ",angle_dict[key])
                 roi[f"{side}_KNEE"] = False
                 tips = "請確認是否已經將其中一只腳屈膝" if tip_flag else tips
         elif key == f"{side_back}_KNEE":
@@ -790,7 +791,7 @@ def LowLungeRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 roi[f"{side_back}_KNEE"] = True
             else:
                 roi[f"{side_back}_KNEE"] = False
-                print(angle_dict[key])
+                #print(f"{side_back}_KNEE: ", angle_dict[key])
                 tips = "請確認是否將另一隻腳向後伸" if tip_flag else tips
     if tips == "":
         tips = "動作正確"
