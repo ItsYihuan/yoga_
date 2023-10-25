@@ -61,9 +61,9 @@ mp_pose = mp.solutions.pose                      # mediapipe 姿勢偵測
 
 
 # # detect video path
-video_path = f"{CWD}/yoga_toolkit/SampleVideo/ChildsPose/sample.mp4"
+video_path = f"{CWD}/yoga_toolkit/SampleVideo/BridgePose/sample.mp4"
 file_name = (video_path.split('/')[-1]).split('.')[0]
-storage_path = f"{CWD}/yoga_toolkit/SampleVideo/ChildsPose/output.mp4"
+storage_path = f"{CWD}/yoga_toolkit/SampleVideo/BridgePose/output.mp4"
 
 cap = cv2.VideoCapture(video_path)
 original_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -74,8 +74,8 @@ print(original_width,original_height)
 fps = cap.get(cv2.CAP_PROP_FPS)
 
 with mp_pose.Pose(
-    min_detection_confidence=0.5,
-    min_tracking_confidence=0.5) as pose:
+    min_detection_confidence=0.4,
+    min_tracking_confidence=0.4) as pose:
     # Import video file
         video_cap = cv2.VideoCapture(video_path)
 
@@ -100,8 +100,8 @@ with mp_pose.Pose(
                 results.pose_landmarks,
                 mp_pose.POSE_CONNECTIONS,
                 landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())
-
-            LOWLUNGE_ANGLE = {
+            
+            BRIDGE_ANGLE = {
                 "LEFT_ELBOW": [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER], results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_ELBOW], results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_WRIST]],
                 "RIGHT_ELBOW": [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER], results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ELBOW], results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_WRIST]],
                 "LEFT_SHOULDER": [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_ELBOW], results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER], results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_HIP]],
@@ -110,17 +110,19 @@ with mp_pose.Pose(
                 "RIGHT_HIP": [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER], results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_HIP], results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_KNEE]],
                 "LEFT_KNEE": [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_HIP], results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_KNEE], results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_ANKLE]],
                 "RIGHT_KNEE": [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_HIP], results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_KNEE], results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ANKLE]],
+                "LEFT_ANKLE": [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_KNEE], results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_ANKLE], results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_FOOT_INDEX]],
+                "RIGHT_ANKLE": [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_KNEE], results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ANKLE], results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_FOOT_INDEX]],
             }
 
             angle_dict={}
-            for key,value in LOWLUNGE_ANGLE.items():
+            for key,value in BRIDGE_ANGLE.items():
             # print(getLandmarks(value[0]))
                 angle = computeAngle(list(getLandmarks(value[0],original_width,original_height)),
                     list(getLandmarks(value[1],original_width,original_height)),
                     list(getLandmarks(value[2],original_width,original_height)))
                 angle_dict[key] = angle
             print(angle_dict)
-
+            
             cv2.imshow('oxxostudio', img)
             output.write(img)
             if cv2.waitKey(5) == ord('q'):

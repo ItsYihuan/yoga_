@@ -866,3 +866,151 @@ def SeatedForwardBendRule(roi, tips, sample_angle_dict, angle_dict, point3d):
     if tips == "":
         tips = "動作正確"
     return roi, tips
+def BridgeRule(roi, tips, sample_angle_dict, angle_dict, point3d):
+    """Seated Forward Bend pose rule   
+    Args:
+        roi (list): region of interesting joint for tree pose
+        tips (str): tips
+        sample_angle_dict (dict): sample angle dict
+        angle_dict (dict): angle dict
+        point3d (mediapipe): mediapipe detect result
+        
+    Returns:
+        roi (dict)
+        tips (str)
+    """
+    side = ""
+    for key, _ in roi.items():
+        tip_flag = False
+        if tips == "":
+            tip_flag = True
+        #detect the side for the pose
+        if key == 'NOSE':
+            node_x,_,_ = getLandmarks(point3d[AngleNodeDef.NOSE])
+            left_shoulder_x,_,_ = getLandmarks(point3d[AngleNodeDef.LEFT_SHOULDER])
+            right_shoulder_x,_,_ = getLandmarks(point3d[AngleNodeDef.RIGHT_SHOULDER])
+            if node_x>left_shoulder_x and node_x>right_shoulder_x:
+                roi[key] = True
+                side = "LEFT"
+            elif node_x<left_shoulder_x and node_x<right_shoulder_x:
+                roi[key] = True
+                side = "RIGHT"
+            else:
+                roi[key] = False
+                tips = "請將身體平躺下，並將雙手放置於身體兩側" if tip_flag else tips
+                break
+        if key == f'{side}_ELBOW':
+            if angle_dict[key]>=145:
+                roi["LEFT_ELBOW"] = True
+                roi["RIGHT_ELBOW"] = True
+            else:
+                roi["LEFT_ELBOW"] = False
+                roi["RIGHT_ELBOW"] = False
+                #print(angle_dict[key])
+                tips = "請確認手掌是否已經貼至地面"   if tip_flag else tips
+        elif key == f'{side}_KNEE':
+            if angle_dict[key]<=80:
+                roi["LEFT_KNEE"] = True
+                roi["RIGHT_KNEE"] = True
+            else:
+                roi["LEFT_KNEE"] = False
+                roi["RIGHT_KNEE"] = False
+                #print(angle_dict[key])
+                tips = "請確認是否已經將雙腳屈膝" if tip_flag else tips
+        elif key == f'{side}_SHOULDER':
+            if angle_dict[key]<=45:
+                roi["LEFT_SHOULDER"] = True
+                roi["RIGHT_SHOULDER"] = True
+            else:
+                roi["LEFT_SHOULDER"] = False
+                roi["RIGHT_SHOULDER"] = False
+                tips = "請確認是否已經將手臂放置於身體兩側" if tip_flag else tips
+        elif key == f'{side}_HIP':
+            if angle_dict[key]>=150:
+                roi["LEFT_HIP"] = True
+                roi["RIGHT_HIP"] = True
+            else:
+                roi["LEFT_HIP"] = False
+                roi["RIGHT_HIP"] = False
+                tips = "請確認是否已經將身體挺直，並與大腿形成一條直線" if tip_flag else tips
+    if tips == "":
+        tips = "動作正確"
+    return roi, tips
+
+def PyramidRule(roi, tips, sample_angle_dict, angle_dict, point3d):
+    """Seated Forward Bend pose rule   
+    Args:
+        roi (list): region of interesting joint for tree pose
+        tips (str): tips
+        sample_angle_dict (dict): sample angle dict
+        angle_dict (dict): angle dict
+        point3d (mediapipe): mediapipe detect result
+        
+    Returns:
+        roi (dict)
+        tips (str)
+    """
+    side = ""
+    for key, _ in roi.items():
+        tip_flag = False
+        if tips == "":
+            tip_flag = True
+        #detect the side for the pose
+        if key == 'NOSE':
+            node_x,_,_ = getLandmarks(point3d[AngleNodeDef.NOSE])
+            left_shoulder_x,_,_ = getLandmarks(point3d[AngleNodeDef.LEFT_SHOULDER])
+            right_shoulder_x,_,_ = getLandmarks(point3d[AngleNodeDef.RIGHT_SHOULDER])
+            if node_x>left_shoulder_x and node_x>right_shoulder_x:
+                roi[key] = True
+                side = "LEFT"
+            elif node_x<left_shoulder_x and node_x<right_shoulder_x:
+                roi[key] = True
+                side = "RIGHT"
+            else:
+                roi[key] = False
+                tips = "請將身體平躺下，並將雙手放置於身體兩側" if tip_flag else tips
+                break
+        if key == f'{side}_ELBOW':
+            if angle_dict[key]>=90:
+                roi["LEFT_ELBOW"] = True
+                roi["RIGHT_ELBOW"] = True
+            else:
+                roi["LEFT_ELBOW"] = False
+                roi["RIGHT_ELBOW"] = False
+                #print(angle_dict[key])
+                tips = "請確認手掌是否已經貼至地面"   if tip_flag else tips
+        elif key == f'{side}_KNEE':
+            if angle_dict[key]>=150:
+                roi["LEFT_KNEE"] = True
+                roi["RIGHT_KNEE"] = True
+            else:
+                roi["LEFT_KNEE"] = False
+                roi["RIGHT_KNEE"] = False
+                #print(angle_dict[key])
+                tips = "請確認是否已經將雙腳打直" if tip_flag else tips
+        elif key == f'{side}_SHOULDER':
+            if angle_dict[key]>=85:
+                roi["LEFT_SHOULDER"] = True
+                roi["RIGHT_SHOULDER"] = True
+            else:
+                roi["LEFT_SHOULDER"] = False
+                roi["RIGHT_SHOULDER"] = False
+                tips = "請確認是否已經將手臂放置於前腳兩側" if tip_flag else tips
+        elif key == f'{side}_HIP':
+            if angle_dict[key]<=110:
+                roi["LEFT_HIP"] = True
+                roi["RIGHT_HIP"] = True
+            else:
+                print(angle_dict[key])
+                roi["LEFT_HIP"] = False
+                roi["RIGHT_HIP"] = False
+                tips = "請確認是否已經將身體向前腳彎曲" if tip_flag else tips
+        elif key == 'LEG_ANKLE':
+            if angle_dict[key]<=90:
+                roi["LEG"] = True
+            else:
+                roi["LEG"] = False
+                tips = "請確認是否已經將一隻腳向後伸直" if tip_flag else tips
+    if tips == "":
+        tips = "動作正確"
+    return roi, tips

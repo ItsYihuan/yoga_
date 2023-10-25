@@ -169,7 +169,50 @@ class YogaPose():
             angle_def = AngleNodeDef.SEATEDFORWARDBEND_ANGLE 
             jsonfile_path = f"yoga_toolkit/JsonFile/SeatedForwardBendPose/sample.json"
             samplefile_path = f"yoga_toolkit/SampleVideo/SeatedForwardBendPose/sample.mp4"
- 
+        elif type == "Bridge":
+            roi = {
+                'NOSE': False,
+                'LEFT_SHOULDER': False,
+                'RIGHT_SHOULDER': False,
+                'LEFT_ELBOW': False,
+                'RIGHT_ELBOW': False,
+                'LEFT_WRIST': False,
+                'RIGHT_WRIST': False,
+                'LEFT_HIP': False,
+                'RIGHT_HIP': False,
+                'RIGHT_KNEE': False,
+                'LEFT_KNEE': False,
+                'RIGHT_ANKLE':False,
+                'LEFT_ANKLE':False,
+                'RIGHT_FOOT_INDEX':False,
+                'LEFT_FOOT_INDEX':False,
+            }
+            angle_def = AngleNodeDef.BRIDGE_ANGLE 
+            jsonfile_path = f"yoga_toolkit/JsonFile/BridgePose/sample.json"
+            samplefile_path = f"yoga_toolkit/SampleVideo/BridgePose/sample.mp4"
+        elif type == "Pyramid":
+            roi = {
+                'NOSE': False,
+                'LEFT_SHOULDER': False,
+                'RIGHT_SHOULDER': False,
+                'LEFT_ELBOW': False,
+                'RIGHT_ELBOW': False,
+                'LEFT_WRIST': False,
+                'RIGHT_WRIST': False,
+                'LEFT_HIP': False,
+                'RIGHT_HIP': False,
+                'RIGHT_KNEE': False,
+                'LEFT_KNEE': False,
+                'RIGHT_ANKLE':False,
+                'LEFT_ANKLE':False,
+                'RIGHT_FOOT_INDEX':False,
+                'LEFT_FOOT_INDEX':False,
+                'LEG': False,
+            }
+            angle_def = AngleNodeDef.PYRAMID_ANGLE 
+            jsonfile_path = f"yoga_toolkit/JsonFile/PyramidPose/sample.json"
+            samplefile_path = f"yoga_toolkit/SampleVideo/PyramidPose/sample.mp4"
+
         return roi, angle_def, jsonfile_path, samplefile_path
     
     def initialAngleDict(self, dict={}):
@@ -310,6 +353,20 @@ class YogaPose():
                                         list(toolkit.getLandmarks(point3d[value[2]])))
                 self.angle_dict[key] = angle
             self.roi, self.tips = toolkit.SeatedForwardBendRule(self.roi, self.tips, self.sample_angle_dict, self.angle_dict, point3d)
+        elif(self.type == 'Bridge'):
+            for key,value in self.angle_def.items():
+                angle = toolkit.computeAngle(list(toolkit.getLandmarks(point3d[value[0]])), 
+                                        list(toolkit.getLandmarks(point3d[value[1]])), 
+                                        list(toolkit.getLandmarks(point3d[value[2]])))
+                self.angle_dict[key] = angle
+            self.roi, self.tips = toolkit.BridgeRule(self.roi, self.tips, self.sample_angle_dict, self.angle_dict, point3d)
+        elif(self.type == 'Pyramid'):
+            for key,value in self.angle_def.items():
+                angle = toolkit.computeAngle(list(toolkit.getLandmarks(point3d[value[0]])), 
+                                        list(toolkit.getLandmarks(point3d[value[1]])), 
+                                        list(toolkit.getLandmarks(point3d[value[2]])))
+                self.angle_dict[key] = angle
+            self.roi, self.tips = toolkit.PyramidRule(self.roi, self.tips, self.sample_angle_dict, self.angle_dict, point3d)
 
         frame = self.draw(w, h, frame, point2d)
         return frame
