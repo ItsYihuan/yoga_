@@ -116,7 +116,6 @@ with mp_pose.Pose(
 
             angle_dict={}
             for key,value in BRIDGE_ANGLE.items():
-            # print(getLandmarks(value[0]))
                 angle = computeAngle(list(getLandmarks(value[0],original_width,original_height)),
                     list(getLandmarks(value[1],original_width,original_height)),
                     list(getLandmarks(value[2],original_width,original_height)))

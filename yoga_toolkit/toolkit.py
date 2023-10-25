@@ -867,7 +867,7 @@ def SeatedForwardBendRule(roi, tips, sample_angle_dict, angle_dict, point3d):
         tips = "動作正確"
     return roi, tips
 def BridgeRule(roi, tips, sample_angle_dict, angle_dict, point3d):
-    """Seated Forward Bend pose rule   
+    """Bridge pose rule   
     Args:
         roi (list): region of interesting joint for tree pose
         tips (str): tips
@@ -915,7 +915,6 @@ def BridgeRule(roi, tips, sample_angle_dict, angle_dict, point3d):
             else:
                 roi["LEFT_KNEE"] = False
                 roi["RIGHT_KNEE"] = False
-                #print(angle_dict[key])
                 tips = "請確認是否已經將雙腳屈膝" if tip_flag else tips
         elif key == f'{side}_SHOULDER':
             if angle_dict[key]<=45:
@@ -938,7 +937,7 @@ def BridgeRule(roi, tips, sample_angle_dict, angle_dict, point3d):
     return roi, tips
 
 def PyramidRule(roi, tips, sample_angle_dict, angle_dict, point3d):
-    """Seated Forward Bend pose rule   
+    """Pyramid pose rule   
     Args:
         roi (list): region of interesting joint for tree pose
         tips (str): tips

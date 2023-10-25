@@ -18,7 +18,8 @@ class Menu(tk.Frame):
 			command=lambda: master.switch_frame(TeachStage, 'Plank', self.vs)).place(x=320, y=250, relwidth=0.17, relheight=0.08)
 		tk.Button(self, text='Reverse Plank', bg='#DDDDFF', font=('Comic Sans MS', 14), activeforeground='#ADADAD',
 			command=lambda: master.switch_frame(TeachStage, 'Reverse Plank', self.vs)).place(x=720, y=250, relwidth=0.17, relheight=0.08)
-		tk.Button(self, text='Child\'s pose', bg='#DDDDFF', font=('Comic Sans MS', 14)).place(x=320, y=350, relwidth=0.17, relheight=0.08)
+		tk.Button(self, text='Child\'s pose', bg='#DDDDFF', font=('Comic Sans MS', 14), activeforeground='#ADADAD',
+			command=lambda: master.switch_frame(TeachStage, 'Childs pose', self.vs)).place(x=320, y=350, relwidth=0.17, relheight=0.08)
 		tk.Button(self, text='Seated Forward Bend', bg='#DDDDFF', font=('Comic Sans MS', 14)).place(x=720, y=350, relwidth=0.17, relheight=0.08)
 		tk.Button(self, text='Low Lunge', bg='#DDDDFF', font=('Comic Sans MS', 14)).place(x=320, y=450, relwidth=0.17, relheight=0.08)
 		tk.Button(self, text='Downward dog', bg='#DDDDFF', font=('Comic Sans MS', 14)).place(x=720, y=450, relwidth=0.17, relheight=0.08)
