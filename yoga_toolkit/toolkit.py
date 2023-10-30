@@ -626,7 +626,10 @@ def ChildsPoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 roi["RIGHT_SHOULDER"] = False
                 tips = "請確認是否已經將手臂向前伸直" if tip_flag else tips
         elif key == f'{side}_HIP':
-            if angle_dict[key]<=45:
+            tolerance_val = 10
+            min_angle = sample_angle_dict[key]-tolerance_val
+            max_angle = sample_angle_dict[key]+tolerance_val
+            if angle_dict[key]<=max_angle and min_angle<=angle_dict[key]:
                 roi["LEFT_HIP"] = True
                 roi["RIGHT_HIP"] = True
             else:
@@ -694,7 +697,10 @@ def DownwardDogRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 roi["RIGHT_SHOULDER"] = False
                 tips = "請確認是否已經將手臂打直" if tip_flag else tips	
         elif key == f'{side}_HIP':
-            if angle_dict[key]>=65 and angle_dict[key]<=105:
+            tolerance_val = 10
+            min_angle = sample_angle_dict[key]-tolerance_val
+            max_angle = sample_angle_dict[key]+tolerance_val
+            if angle_dict[key]>=min_angle and angle_dict[key]<=max_angle:
                 roi["LEFT_HIP"] = True
                 roi["RIGHT_HIP"] = True
             else:
@@ -758,7 +764,9 @@ def LowLungeRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 tips = "請將身體面向右方或左方，並將雙手向上舉起" if tip_flag else tips
                 break
         if key == f'{side}_ELBOW':
-            if angle_dict[key]>=150:
+            tolerance_val = 10
+            min_angle = sample_angle_dict[key]-tolerance_val
+            if angle_dict[key]>=min_angle:
                 roi["LEFT_ELBOW"] = True
                 roi["RIGHT_ELBOW"] = True
             else:
@@ -816,8 +824,8 @@ def SeatedForwardBendRule(roi, tips, sample_angle_dict, angle_dict, point3d):
         if tips == "":
             tip_flag = True
         #detect the side for the pose
-        """if key == 'NOSE':
-            node_x,_,_ = getLandmarks(point3d[AngleNodeDef.NOSE])
+        if key == 'LEFT_FOOT_INDEX':
+            node_x,_,_ = getLandmarks(point3d[AngleNodeDef.LEFT_FOOT_INDEX])
             left_shoulder_x,_,_ = getLandmarks(point3d[AngleNodeDef.LEFT_SHOULDER])
             right_shoulder_x,_,_ = getLandmarks(point3d[AngleNodeDef.RIGHT_SHOULDER])
             if node_x>left_shoulder_x and node_x>right_shoulder_x:
@@ -830,8 +838,7 @@ def SeatedForwardBendRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 roi[key] = False
                 tips = "請將身體面向右方或左方坐下，並將腳伸直" if tip_flag else tips
                 break
-        el"""
-        if key == f'{side}_SHOULDER':
+        elif key == f'{side}_SHOULDER':
             if angle_dict[key]>=90:
                 roi["LEFT_SHOULDER"] = True
                 roi["RIGHT_SHOULDER"] = True
@@ -840,7 +847,10 @@ def SeatedForwardBendRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 roi["RIGHT_SHOULDER"] = False
                 tips = "請確認是否已經將手臂向前伸" if tip_flag else tips
         elif key == f'{side}_HIP':
-            if angle_dict[key]<=60:
+            tolerance_val = 20
+            min_angle = sample_angle_dict[key]-tolerance_val
+            max_angle = sample_angle_dict[key]+tolerance_val
+            if angle_dict[key]<=max_angle and min_angle<=angle_dict[key]:
                 roi["LEFT_HIP"] = True
                 roi["RIGHT_HIP"] = True
             else:
@@ -866,6 +876,7 @@ def SeatedForwardBendRule(roi, tips, sample_angle_dict, angle_dict, point3d):
     if tips == "":
         tips = "動作正確"
     return roi, tips
+
 def BridgeRule(roi, tips, sample_angle_dict, angle_dict, point3d):
     """Bridge pose rule   
     Args:
@@ -900,7 +911,9 @@ def BridgeRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 tips = "請將身體平躺下，並將雙手放置於身體兩側" if tip_flag else tips
                 break
         if key == f'{side}_ELBOW':
-            if angle_dict[key]>=145:
+            tolerance_val = 25
+            min_angle = sample_angle_dict[key]-tolerance_val
+            if angle_dict[key]>=min_angle:
                 roi["LEFT_ELBOW"] = True
                 roi["RIGHT_ELBOW"] = True
             else:
@@ -967,7 +980,7 @@ def PyramidRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 side = "RIGHT"
             else:
                 roi[key] = False
-                tips = "請將身體平躺下，並將雙手放置於身體兩側" if tip_flag else tips
+                tips = "請將雙腿呈現弓箭步姿，並將身體向前腳彎曲" if tip_flag else tips
                 break
         if key == f'{side}_ELBOW':
             if angle_dict[key]>=90:
@@ -977,9 +990,11 @@ def PyramidRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 roi["LEFT_ELBOW"] = False
                 roi["RIGHT_ELBOW"] = False
                 #print(angle_dict[key])
-                tips = "請確認手掌是否已經貼至地面"   if tip_flag else tips
+                tips = "請確認手掌是否已經抓到腳踝"   if tip_flag else tips
         elif key == f'{side}_KNEE':
-            if angle_dict[key]>=150:
+            tolerance_val = 20
+            min_angle = sample_angle_dict[key]-tolerance_val
+            if angle_dict[key]>=min_angle:
                 roi["LEFT_KNEE"] = True
                 roi["RIGHT_KNEE"] = True
             else:
@@ -1000,7 +1015,7 @@ def PyramidRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 roi["LEFT_HIP"] = True
                 roi["RIGHT_HIP"] = True
             else:
-                print(angle_dict[key])
+                #print(angle_dict[key])
                 roi["LEFT_HIP"] = False
                 roi["RIGHT_HIP"] = False
                 tips = "請確認是否已經將身體向前腳彎曲" if tip_flag else tips

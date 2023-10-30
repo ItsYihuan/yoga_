@@ -8,7 +8,7 @@ CWD = os.getcwd().replace("\\","/")
 #                f"{CWD}/yoga_toolkit/TreePose/Image/detect/test5.jpg"]
 
 '''
-type: WarriorII, Tree, Plank, ReversePlank, Childs, DownwardDog, LowLunge, SeatedForwardBend, Bridge
+type: WarriorII, Tree, Plank, ReversePlank, Childs, DownwardDog, LowLunge, SeatedForwardBend, Bridge, Pyramid
 '''
 pose = YogaPose("Pyramid")
 pose.initialDetect()
