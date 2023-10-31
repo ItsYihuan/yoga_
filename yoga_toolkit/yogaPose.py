@@ -278,7 +278,7 @@ class YogaPose():
         print("Sample Done.")
         cap.release()
         
-    def detect(self, frame, w, h, mode):
+    def detect(self, frame, w, h, mode, mat):
         '''
         detect incoming frame
         return draw frame
