@@ -1,5 +1,7 @@
 import os
 import cv2
+
+from yoga_toolkit.mat_data import mat_data
 from yoga_toolkit.yogaPose import YogaPose
 CWD = os.getcwd().replace("\\","/")
 
@@ -38,7 +40,8 @@ while True:
     if not ret:
         print("Video end")
         break
-    frame = pose.detect(frame, original_width, original_height, False)
+    mat = mat_data()
+    frame = pose.detect(frame, original_width, original_height, False, mat)
     # 水平翻轉影片
     frame = cv2.flip(frame, 180)
     print(pose.tips)
