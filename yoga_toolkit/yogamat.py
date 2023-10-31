@@ -1,8 +1,10 @@
 import serial
 import cv2
 import numpy as np
+from yoga_toolkit.mat_data import mat_point, mat_data
 
-serial_port = 'COM3'
+
+serial_port = 'COM5'
 baud_rate = 115200
 enlarge = 50
 ser = serial.Serial(serial_port, baud_rate)    
@@ -69,8 +71,24 @@ def get_heatmap():
             x , y , w , h = rect
             cv2.rectangle(heatmap, (x, y), (x + w, y + h), (36,255,12), 2)
     heatmap = cv2.rotate(heatmap, cv2.ROTATE_180)
-    return heatmap
+    mat = get_mat_data(rects, center)
+    return heatmap, mat
         
+
+def get_mat_data(rects, center):
+    points = []
+    for rect in rects:
+        point = mat_point([0], rect[1], rect[2], rect[3])
+        if(not is_boundary_point(point)):
+            points.append(point)
+
+    mat = mat_data(points = points, center = center)
+
+    return mat
+
+def is_boundary_point(point):
+    return (point.width >= 900 or point.height >= 600)
+
 
 def find_bounding_box(heatmap):
     #https://stackoverflow.com/questions/58419893/generating-bounding-boxes-from-heatmap-data
