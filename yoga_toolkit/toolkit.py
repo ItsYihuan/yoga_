@@ -127,7 +127,7 @@ def computeAngle(point1, centerPoint, point2):
     B = m.degrees(m.acos(cos_b))
     return B
 
-def treePoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
+def treePoseRule(roi, tips, sample_angle_dict, angle_dict, point3d, mat):
     """tree pose rule 
         
     Args:
@@ -146,6 +146,10 @@ def treePoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
         tip_flag = False
         if tips == "":
             tip_flag = True
+        if mat.point_count == 0:
+            tips = "請將腳踩到瑜珈墊中" if tip_flag else tips
+        elif mat.point_count >= 2:
+            tips = "請將右腳抬起" if tip_flag else tips
         if key == 'LEFT_KNEE' or key == 'LEFT_HIP':
             tolerance_val = 8
             min_angle = sample_angle_dict[key]-tolerance_val
