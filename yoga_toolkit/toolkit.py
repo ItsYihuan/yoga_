@@ -243,7 +243,7 @@ def warriorIIPoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
     """
     
     # imageFolder temporary use to demo
-    imageFolder = "./data/image/WarriorIIRulePic"
+    imageFolder = ""#"./data/image/WarriorIIRulePic"
     imagePath = ""
     for key, _ in roi.items():
         tip_flag = False

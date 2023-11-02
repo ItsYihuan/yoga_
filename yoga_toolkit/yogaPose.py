@@ -13,7 +13,7 @@ class YogaPose():
         self.roi, self.angle_def, self.jsonfile_path, self.samplefile_path = self.initialize(type)
         self.angle_dict = self.initialAngleDict()
         self.sample_angle_dict = {}
-        self.imagePath = "./data/image/WarriorIIRulePic/8.JPG" # temporary use to demo, skip it
+        self.imagePath = ""#"./data/image/WarriorIIRulePic/8.JPG" # temporary use to demo, skip it
         
     def initialize(self, type):
         roi = {}

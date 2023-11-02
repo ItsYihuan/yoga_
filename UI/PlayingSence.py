@@ -9,7 +9,7 @@ from yoga_toolkit.yogaPose import *
 from yoga_toolkit.mat_data import *
 
 """ Ture if the yoga mat is connected. """
-use_mat = True
+use_mat = False#True
 if(use_mat):
 	from yoga_toolkit.yogamat import get_heatmap
 
@@ -23,7 +23,7 @@ class StartPlay(tk.Frame):
 		self.is_paused = False
 		self.cnt_frame = 0		
 		self.txt_tmp = ""
-		self.img_path = "data/image/background.jpg"
+		self.img_path = VideoPath.Yoga_Tips[name]
 		
 		tk.Label(self, text=name, font=('Comic Sans MS', 30, 'bold'), fg='#B15BFF').place(x=500, y=15)
 		""" hint """
