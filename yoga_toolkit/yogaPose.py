@@ -331,7 +331,7 @@ class YogaPose():
                                         list(toolkit.getLandmarks(point3d[value[1]]))[:2], 
                                         list(toolkit.getLandmarks(point3d[value[2]]))[:2])
                 self.angle_dict[key] = angle
-            self.roi, self.tips = toolkit.ChildsPoseRule(self.roi, self.tips, self.sample_angle_dict, self.angle_dict, point3d)
+            self.roi, self.tips, self.imagePath = toolkit.ChildsPoseRule(self.roi, self.tips, self.sample_angle_dict, self.angle_dict, point3d)
         elif(self.type == 'DownwardDog'):
             for key,value in self.angle_def.items():
                 angle = toolkit.computeAngle(list(toolkit.getLandmarks(point3d[value[0]])), 

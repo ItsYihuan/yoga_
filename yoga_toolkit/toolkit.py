@@ -243,7 +243,7 @@ def warriorIIPoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
     """
     
     # imageFolder temporary use to demo
-    imageFolder = ""#"./data/image/WarriorIIRulePic"
+    imageFolder = "./data/image/WarriorIIRulePic"
     imagePath = ""
     for key, _ in roi.items():
         tip_flag = False
@@ -593,6 +593,9 @@ def ChildsPoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
 		roi (dict)
 		tips (str)
     """
+    # imageFolder temporary use to demo
+    imageFolder = "./data/image/Childspose"
+    imagePath = ""
     side = ""
     for key, _ in roi.items():
         tip_flag = False
@@ -606,29 +609,26 @@ def ChildsPoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
             if node_x>left_hip_x and node_x>right_hip_x:
                 roi[key] = True
                 side = "LEFT"
+                imagePath = f"{imageFolder}/5.jpg" if tip_flag else imagePath
             elif node_x<left_hip_x and node_x<right_hip_x:
                 roi[key] = True
                 side = "RIGHT"
+                imagePath = f"{imageFolder}/5.jpg" if tip_flag else imagePath
             else:
                 roi[key] = False
-                tips = "請將身體面向右方或左方趴下，並用雙手將臀部向前伸直" if tip_flag else tips
+                tips = "請將身體面向右方或左方趴下，並用雙手將臂部向前伸直" if tip_flag else tips
+                imagePath = f"{imageFolder}/1.jpg" if tip_flag else imagePath
                 break
-        if key == f'{side}_ELBOW':
-            if angle_dict[key]>=150:
-                roi["LEFT_ELBOW"] = True
-                roi["RIGHT_ELBOW"] = True
+        if key == f'{side}_KNEE':
+            if angle_dict[key]<=45:
+                roi["LEFT_KNEE"] = True
+                roi["RIGHT_KNEE"] = True
+                imagePath = f"{imageFolder}/5.jpg" if tip_flag else imagePath
             else:
-                roi["LEFT_ELBOW"] = False
-                roi["RIGHT_ELBOW"] = False
-                tips = "請確認手掌是否已經貼至地面"   if tip_flag else tips
-        elif key == f'{side}_SHOULDER':
-            if angle_dict[key]>=150:
-                roi["LEFT_SHOULDER"] = True
-                roi["RIGHT_SHOULDER"] = True
-            else:
-                roi["LEFT_SHOULDER"] = False
-                roi["RIGHT_SHOULDER"] = False
-                tips = "請確認是否已經將手臂向前伸直" if tip_flag else tips
+                roi["LEFT_KNEE"] = False
+                roi["RIGHT_KNEE"] = False
+                tips = "請確認雙腿是否已經屈膝向前" if tip_flag else tips
+                imagePath = f"{imageFolder}/1.jpg" if tip_flag else imagePath
         elif key == f'{side}_HIP':
             tolerance_val = 10
             min_angle = sample_angle_dict[key]-tolerance_val
@@ -636,20 +636,37 @@ def ChildsPoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
             if angle_dict[key]<=max_angle and min_angle<=angle_dict[key]:
                 roi["LEFT_HIP"] = True
                 roi["RIGHT_HIP"] = True
+                imagePath = f"{imageFolder}/5.jpg" if tip_flag else imagePath
             else:
                 roi["LEFT_HIP"] = False
                 roi["RIGHT_HIP"] = False
                 tips = "請確認是否已經將身體向前趴下" if tip_flag else tips	
-        elif key == f'{side}_KNEE':
-            if angle_dict[key]<=45:
-                roi["LEFT_KNEE"] = True
-                roi["RIGHT_KNEE"] = True
+                imagePath = f"{imageFolder}/2.jpg" if tip_flag else imagePath
+        elif key == f'{side}_SHOULDER':
+            if angle_dict[key]>=150:
+                roi["LEFT_SHOULDER"] = True
+                roi["RIGHT_SHOULDER"] = True
+                imagePath = f"{imageFolder}/5.jpg" if tip_flag else imagePath
             else:
-                roi["LEFT_KNEE"] = False
-                roi["RIGHT_KNEE"] = False
-                tips = "請確認雙腿是否已經屈膝向前" if tip_flag else tips		
+                roi["LEFT_SHOULDER"] = False
+                roi["RIGHT_SHOULDER"] = False
+                imagePath = f"{imageFolder}/3.jpg" if tip_flag else imagePath
+                tips = "請確認是否已經將手臂向前伸直" if tip_flag else tips
+        elif key == f'{side}_ELBOW':
+            if angle_dict[key]>=150:
+                roi["LEFT_ELBOW"] = True
+                roi["RIGHT_ELBOW"] = True
+                imagePath = f"{imageFolder}/5.jpg" if tip_flag else imagePath
+            else:
+                roi["LEFT_ELBOW"] = False
+                roi["RIGHT_ELBOW"] = False
+                tips = "請確認手掌是否已經貼至地面"   if tip_flag else tips 
+                imagePath = f"{imageFolder}/4.jpg" if tip_flag else imagePath       
+
+		
     if tips == "":
         tips = "動作正確 ! "
+        imagePath = f"{imageFolder}/5.jpg" if tip_flag else imagePath
     return roi, tips
 
 def DownwardDogRule(roi, tips, sample_angle_dict, angle_dict, point3d):
