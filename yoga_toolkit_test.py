@@ -12,7 +12,7 @@ CWD = os.getcwd().replace("\\","/")
 '''
 type: WarriorII, Tree, Plank, ReversePlank, Childs, DownwardDog, LowLunge, SeatedForwardBend, Bridge, Pyramid
 '''
-pose = YogaPose("Pyramid")
+pose = YogaPose("Childs")
 pose.initialDetect()
 
 # detect image
@@ -24,9 +24,9 @@ pose.initialDetect()
 #     cv2.waitKey(0)
 
 # # detect video path
-video_path = f"{CWD}/yoga_toolkit/SampleVideo/PyramidPose/sample.mp4"
+video_path = f"{CWD}/yoga_toolkit/SampleVideo/ChildsPose/sample.mp4"
 file_name = (video_path.split('/')[-1]).split('.')[0]
-storage_path = f"{CWD}/yoga_toolkit/SampleVideo/PyramidPose/output/{file_name}.mp4"
+storage_path = f"{CWD}/yoga_toolkit/SampleVideo/ChildsPose/{file_name}_out.mp4"
 
 cap = cv2.VideoCapture(video_path)
 original_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))

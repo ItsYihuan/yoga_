@@ -152,7 +152,7 @@ class StartPlay(tk.Frame):
 				try:
 					frame = cv2.resize(frame, (self.width, self.height))
 					frame = self.model.detect(frame, self.width, self.height, False, self.yoga_mat_data)
-					# frame = cv2.flip(frame, 180)
+					frame = cv2.flip(frame, 180)
 					photo_image = ImageTk.PhotoImage(Image.fromarray(frame))
 					self.canvas_cam.create_image(0, 0, anchor='nw', image=photo_image)
 					self.canvas_cam.image = photo_image

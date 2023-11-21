@@ -620,7 +620,7 @@ def ChildsPoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 imagePath = f"{imageFolder}/1.jpg" if tip_flag else imagePath
                 break
         if key == f'{side}_KNEE':
-            if angle_dict[key]<=45:
+            if angle_dict[key]<=60:
                 roi["LEFT_KNEE"] = True
                 roi["RIGHT_KNEE"] = True
                 imagePath = f"{imageFolder}/5.jpg" if tip_flag else imagePath
@@ -630,7 +630,7 @@ def ChildsPoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
                 tips = "請確認雙腿是否已經屈膝向前" if tip_flag else tips
                 imagePath = f"{imageFolder}/1.jpg" if tip_flag else imagePath
         elif key == f'{side}_HIP':
-            tolerance_val = 10
+            tolerance_val = 30
             min_angle = sample_angle_dict[key]-tolerance_val
             max_angle = sample_angle_dict[key]+tolerance_val
             if angle_dict[key]<=max_angle and min_angle<=angle_dict[key]:
@@ -667,7 +667,7 @@ def ChildsPoseRule(roi, tips, sample_angle_dict, angle_dict, point3d):
     if tips == "":
         tips = "動作正確 ! "
         imagePath = f"{imageFolder}/5.jpg" if tip_flag else imagePath
-    return roi, tips
+    return roi, tips, imagePath
 
 def DownwardDogRule(roi, tips, sample_angle_dict, angle_dict, point3d):
     """Downward dog's pose rule 

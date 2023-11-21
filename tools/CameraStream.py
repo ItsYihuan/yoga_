@@ -1,10 +1,13 @@
 import cv2
 import threading
 import datetime
+import tools.VideoPath as VideoPath
 
 class CameraStream:
 	def __init__(self):
-		self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+		video=VideoPath.Yoga_Test['Childs pose']
+		print(video)
+		self.cap = cv2.VideoCapture(video)#"cv2.VideoCapture(0, cv2.CAP_DSHOW)
 		self.is_running = False
 		self.frame = None
 		
