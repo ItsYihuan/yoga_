@@ -49,7 +49,7 @@ class Calibration(tk.Frame):
 			if frame is not None:
 				try:
 					frame = correction(frame)
-					frame = cv2.flip(frame, 180)
+					#frame = cv2.flip(frame, 180)
 					frame = cv2.resize(frame, (self.width, self.height))
 					photo_image = ImageTk.PhotoImage(Image.fromarray(frame))
 					self.canvas.create_image(0, 0, anchor='nw', image=photo_image)

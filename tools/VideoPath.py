@@ -14,14 +14,14 @@ Yoga_Video = {
 Yoga_Test = {
     "Tree Style": 'data/video/TreePose_show.mp4', 
     "Warrior2 Style": 'data/video/warriorII_show.mp4', 
-    "Plank": 'data/video/plank_show.mp4',
-    "Reverse Plank": 'data/video/reverseplank_show.mp4', 
+    "Plank": 'data/video/Plank_show.mp4',
+    "Reverse Plank": 'data/video/Reverse_Plank_show.mp4', 
     "Childs pose": 'data/video/Childpose_show.mp4',
-    "Downward dog" :'data/video/downwarddog_show.mp4',
-    "Low Lunge": 'data/video/lowlunge_show.mp4', 
-    "Seated Forward Bend":'data/video/seatedforwardbend_show.mp4',
-    "Bridge pose":'data/video/bridge_show.mp4',
-    "Pyramid pose":'data/video/pyramid_show.mp4'
+    "Downward dog" :'data/video/DownwardDog_show.mp4',
+    "Low Lunge": 'data/video/LowLungePose_show.mp4', 
+    "Seated Forward Bend":'data/video/SeatedForwardBendPose_show.mp4',
+    "Bridge pose":'data/video/BridgePose_show.mp4',
+    "Pyramid pose":'data/video/PyramidPose_show.mp4'
 }
 
 Yoga_Model = {

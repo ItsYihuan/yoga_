@@ -159,6 +159,7 @@ class StartPlay(tk.Frame):
 					self.canvas_cam.update()
 					self.txt_tmp = self.model.tips
 					self.img_path = self.model.imagePath
+					
 				except:
 					print('cap stop')
 
