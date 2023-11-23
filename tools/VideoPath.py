@@ -20,7 +20,7 @@ Yoga_Test = {
     "Downward dog" :'data/video/DownwardDog_show.mp4',
     "Low Lunge": 'data/video/LowLungePose_show.mp4', 
     "Seated Forward Bend":'data/video/SeatedForwardBendPose_show.mp4',
-    "Bridge pose":'data/video/BridgePose_show.mp4',
+    "Bridge pose":'data/video/bridge_show.mp4',
     "Pyramid pose":'data/video/PyramidPose_show.mp4'
 }
 
