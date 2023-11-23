@@ -7,7 +7,7 @@ class CameraStream:
 	def __init__(self):
 		video=VideoPath.Yoga_Test['Pyramid pose'] # Pyramid pose, Bridge pose, Seated Forward Bend, Low Lunge, Downward dog, Warrior2 Style, Childs pose, Tree Style, Plank, Reverse Plank
 		print(video)
-		self.cap = cv2.VideoCapture(video)#"cv2.VideoCapture(0, cv2.CAP_DSHOW)
+		self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW) #cv2.VideoCapture(video)
 		self.is_running = False
 		self.frame = None
 		
